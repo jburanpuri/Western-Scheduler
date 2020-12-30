@@ -96,7 +96,7 @@ catch(err){
 }
 });
 
-//admin has the ability to activate and deactivate user accounts
+//admin has the ability to activate and deactivate user accounts -private
 router.put('/admin/active-status/:id', auth, async (req, res) => {
     if(!req.user.isAdmin){
         return res.status(401).json({ errors: [{ msg: 'Unauthorized Request' }] });
