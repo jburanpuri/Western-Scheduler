@@ -73,3 +73,49 @@ router.get('/admin', auth, async (req, res) => {
     }
 });
 
+
+//admin can update user's statuses - private
+router.put('/admin/admin-status/:id', auth, async (req, res) => {
+    if(!req.user.isAdmin){
+        return res.status(401).json({ errors: [{ msg: 'Unauthorized Request' }] });
+    }
+    const { isAdmin } = req.body;
+try{
+    const update = {
+        isAdmin
+    }
+    const user = await User.findByIdAndUpdate(req.params.id, update, {new: true}).select('-password');
+    if(!user){
+        return res.status(404).json({ errors: [{ msg: 'User Not Found' }] });
+    }
+    res.json(user);
+}
+catch(err){
+    console.error(err.message);
+    res.status(500).send('Server Error');
+}
+});
+
+//admin has the ability to activate and deactivate user accounts
+router.put('/admin/active-status/:id', auth, async (req, res) => {
+    if(!req.user.isAdmin){
+        return res.status(401).json({ errors: [{ msg: 'Unauthorized Request' }] });
+    }
+    const { deactivated } = req.body;
+try{
+    const update = {
+        deactivated
+    }
+    const user = await User.findByIdAndUpdate(req.params.id, update, {new: true}).select('-password');
+    if(!user){
+        return res.status(404).json({ errors: [{ msg: 'User Not Found' }] });
+    }
+    res.json(user);
+}
+catch(err){
+    console.error(err.message);
+    res.status(500).send('Server Error');
+}
+});
+
+module.exports = router; //exporting users.js
