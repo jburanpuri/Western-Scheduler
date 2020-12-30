@@ -5,7 +5,7 @@ const connectToDb = require('./config/db');
 
 const app = express();
 
-//for aws or local host
+//for aws or local host 5000
 const PORT = process.env.PORT || 5000;
 
 connectToDb(); //to connect to database

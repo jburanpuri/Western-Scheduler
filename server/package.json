@@ -1,0 +1,32 @@
+{
+  "name": "se3316-jburanpu-lab5-final",
+  "version": "1.0.0",
+  "description": "western schedule maker",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "dev": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jburanpuri/se3316-jburanpu-lab5-final.git"
+  },
+  "author": "Janmejay Buranpuri",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jburanpuri/se3316-jburanpu-lab5-final.git"
+  },
+  "homepage": "https://github.com/jburanpuri/se3316-jburanpu-lab5-final.git#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.7.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.11"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
