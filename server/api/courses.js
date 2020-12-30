@@ -1,5 +1,5 @@
 const express = require('express');
-const auth = require('../authorization');
+const auth = require('../authentication');
 const { check, validationResult } = require('express-validator');
 const router = express.Router();
 const Course = require('../../schema/Course');
