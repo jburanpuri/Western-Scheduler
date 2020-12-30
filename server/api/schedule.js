@@ -14,7 +14,7 @@ router.get('/', auth, async(req, res) => {
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Internal Server Error');
     }
 });
 
@@ -27,7 +27,7 @@ router.get('/user', auth, async(req, res) => {
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Internal Server Error');
     }
 });
 
@@ -40,7 +40,7 @@ router.get('/public', async (req, res) => {
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send('Server Error')
+        res.status(500).send('Internal Server Error')
     }
 });
 
@@ -57,7 +57,7 @@ router.get('/:id', auth, async(req, res) => {
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Internal Server Error');
     }
 });
 
@@ -90,7 +90,7 @@ router.put('/update/:id', auth, [
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Internal Server Error');
     }
 });
 
@@ -104,10 +104,83 @@ router.delete('/', auth,async(req, res) => {
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Internal Server Error');
     }
 });
 
+//delete specific schedule by id - public
+router.delete('/delete/:id', auth,async(req, res) => {
+    try{
+        const id = req.params.id;
 
+        await Schedule.findOneAndDelete({ user: req.user.id, _id: req.params.id });
 
+        res.json('Schedule Deleted');
+        
+    }
+    catch(err){
+        console.error(err.message);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+//add or update course in schedule - public 
+router.put('/courses/add/:id', auth, async (req, res) => {
+    const { courseId } = req.body
+    try{
+        let schedule = await Schedule.findOne({ user: req.user.id, _id: req.params.id });
+        if(!schedule){
+            return res.status(404).send('Schedule not found');
+        }
+        const newSchedule = schedule.courses.filter(course => { 
+            const test = course._id != courseId
+            return test
+        });
+        schedule.courses = newSchedule;
+        schedule.courses.push({ _id: courseId });
+
+        await schedule.save();
+
+        schedule = await Schedule.findOne({ user: req.user.id, _id: req.params.id }).populate('courses');
+        if(!schedule){
+            return res.status(404).send('Schedule not found');
+        }
+        res.json(schedule);
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+//remove course from schedule using id
+router.delete('/courses/delete/:schedule/:id', auth, async (req, res) => {
+    try{
+        let schedule = await Schedule.findOne({ user: req.user.id, _id: req.params.schedule });
+        
+        if(!schedule){
+            return res.status(404).send('Schedule not found');
+        }
+
+        const newSchedule = schedule.courses.filter(course => {
+            const test = course._id != req.params.id
+            return test
+        });
+        schedule.courses = newSchedule;
+
+        await schedule.save();
+
+        schedule = await Schedule.findOne({ user: req.user.id, _id: req.params.schedule }).populate('courses');
+        if(!schedule){
+            return res.status(404).send('Schedule not found');
+        }
+        res.json(schedule);
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+module.exports = router; //exporting schedule.js
  
