@@ -13,10 +13,12 @@ connectToDb(); //to connect to database
 app.use(express.json({ extended: false }));
 
 app.use(cors());
-//routes for app.use
+//routes for api
 app.use('/api/users', require('./api/users'));
 app.use('/api/courses', require('./api/courses'));
 app.use('/api/schedule', require('./api/schedule'));
+app.use('/api/docs', require('./api/docs'));
+app.use('/api/auth', require('./api/auth'));
 
 
 app.use(express.static(path.join(__dirname, 'public')));
