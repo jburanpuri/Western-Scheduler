@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const config = require('config');
 const db = config.get('mongoURI');
 
-const connectDb = async () => {
+const connectToDb = async () => {
     try{
-        //asynchronus connection to mongodb
+        //async connection to mongodb
         await mongoose.connect(db, { 
             useNewUrlParser: true,
             useUnifiedTopology: true,
@@ -20,4 +20,4 @@ const connectDb = async () => {
     }
 }
 
-module.exports = connectDb;
+module.exports = connectToDb;
