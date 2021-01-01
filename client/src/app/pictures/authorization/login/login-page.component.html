@@ -1,0 +1,27 @@
+<main>
+    <mat-card>
+        <h1>Login</h1>
+        <mat-spinner *ngIf="isLoading" ></mat-spinner>
+        <form *ngIf="!isLoading" [formGroup]="form" (submit)="login()" >
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input 
+                matInput 
+                type="email" 
+                formControlName="email" >
+                <mat-error *ngIf="form.get('email').invalid" >Please enter valid email</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input 
+                matInput 
+                type="password" 
+                formControlName="password" >
+                <mat-error *ngIf="form.get('password').invalid" >Please enter valid password</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="accent" type="submit" [disabled]="form.get('email').invalid || form.get('password').invalid" >Login</button>
+        </form>
+        <small>By using this website you agree to our privacy policy</small>
+        <p>Dont have an account? <a routerLink="/register">Register</a></p>
+    </mat-card>
+</main>
