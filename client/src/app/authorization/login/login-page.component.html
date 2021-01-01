@@ -9,7 +9,7 @@
                 matInput 
                 type="email" 
                 formControlName="email" >
-                <mat-error *ngIf="form.get('email').invalid" >Please enter valid email</mat-error>
+                <mat-error *ngIf="form.get('email').invalid" >Invalid email, please enter a valid email</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Password</mat-label>
@@ -17,11 +17,11 @@
                 matInput 
                 type="password" 
                 formControlName="password" >
-                <mat-error *ngIf="form.get('password').invalid" >Please enter valid password</mat-error>
+                <mat-error *ngIf="form.get('password').invalid" >Invalid password, please enter valid password.</mat-error>
             </mat-form-field>
             <button mat-raised-button color="accent" type="submit" [disabled]="form.get('email').invalid || form.get('password').invalid" >Login</button>
         </form>
-        <small>By using this website you agree to our privacy policy</small>
-        <p>Dont have an account? <a routerLink="/register">Register</a></p>
+        <small>By logging in or registering you agree to this websites policies.</small>
+        <p>Dont have an account? Feel free to register! <a routerLink="/register">Register</a></p>
     </mat-card>
 </main>

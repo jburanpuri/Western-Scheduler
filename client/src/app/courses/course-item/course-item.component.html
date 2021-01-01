@@ -1,0 +1,36 @@
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{ title }}
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <p>{{ course.catalog_description }}</p>
+    <table>
+        <tr>
+            <th>Section</th>
+            <th>Component</th>
+            <th>Class Number</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Days</th>
+            <th>Campus</th>
+            <th>Instructor</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>{{ course.subject }}</td>
+            <td [ngClass]="setComponent()" >{{ course.course_info[0].ssr_component }}</td>
+            <td>{{ course.course_info[0].class_nbr }}</td>
+            <td>{{ course.course_info[0].start_time }}</td>
+            <td>{{ course.course_info[0].end_time }}</td>
+            <td>{{ course.course_info[0].days }}</td>
+            <td>{{ course.course_info[0].campus }}</td>
+            <td>{{ course.course_info[0].instructors }}</td>
+            <td>{{ course.course_info[0].enrl_stat }}</td>
+        </tr>
+    </table>
+    <mat-action-row>
+        <a *ngIf="!isBuilder" mat-button color="primary" [routerLink]="['/course', course._id]" >View Course</a>
+        <button *ngIf="isBuilder" mat-button type="button" color="primary" (click)="addToSchedule()" >Add</button>
+    </mat-action-row>
+</mat-expansion-panel>
