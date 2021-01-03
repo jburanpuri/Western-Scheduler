@@ -71,6 +71,30 @@ router.post('/', [
 });
 
 
+router.post('/changePassword',auth, async (req, res)=>{
+    const  { currentPassword, newPassword, confirmPassword } = req.body;
+    
+     if(newPassword !== confirmPassword)
+     return  res.status(400).json({ errors: [{ msg: 'Passwords are not matched' }] });
+
+
+     const user = await User.findById(req.user.id);
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if(!isMatch){
+        return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] });
+    }
+
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+
+    await user.save();
+
+    return res.send();
+});
+
+
 module.exports = router; //export file
 
 

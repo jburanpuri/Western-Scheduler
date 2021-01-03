@@ -79,11 +79,13 @@ export class AuthService {
 
   changePassword(currentPassword: string, newPassword: string, confirmPassword: string) {
 
-    this.http.post<{succeed: boolean}>(`${API_URL}/auth/changePassword`, { currentPassword, newPassword, confirmPassword })
-      .subscribe(t => {
-        if(t.succeed){
-          this.router.navigate(['/login']);
-        }
+    this.http.post(`${API_URL}/auth/changePassword`, { currentPassword, newPassword, confirmPassword })
+      .subscribe(() => {
+        this.token = '';
+        this.isAuthenticated = false;
+        this.authStatusListener.next(false);
+        this.clearAuthData();
+        this.router.navigate(['/login']);
       }, error => {
         this.authStatusListener.next(false);
       })

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../authentication/auth.service';
 
 @Component({
@@ -10,12 +11,13 @@ import { AuthService } from '../authentication/auth.service';
 export class ChangepasswordComponent implements OnInit {
   form: FormGroup;
   isLoading:boolean;
+  private authStatusSub: Subscription;
  
   constructor(public authService:AuthService) { 
     this.form = new FormGroup({
       'currentPassword': new FormControl('', {validators: [Validators.required]}),
-      'newPassword': new FormControl('', {validators: [Validators.required]}),
-      'confirmPassword': new FormControl('', {validators: [Validators.required]}),
+      'newPassword': new FormControl('', {validators: [Validators.required, Validators.minLength(6)]}),
+      'confirmPassword': new FormControl('', {validators: [Validators.required, Validators.minLength(6)]}),
     });
   }
 
@@ -31,6 +33,16 @@ export class ChangepasswordComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.authStatusSub = this.authService.getAuthStatus()
+      .subscribe(status => {
+        this.isLoading = status
+      })
   }
 
+  ngOnDestroy(): void{
+    this.authStatusSub.unsubscribe();
+  }
+
+  
 }
