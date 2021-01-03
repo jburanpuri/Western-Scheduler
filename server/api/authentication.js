@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('config');
+const consts = require('../global-constants')
 const auth = require('../authentication');
-const User = require('../../schema/UserSchema');
+const User = require('../schema/UserSchema');
 const { check, validationResult } = require('express-validator');
 
 //get user
@@ -58,7 +58,7 @@ router.post('/', [
             }
         }
 
-        jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 3600 }, (err, token) => {
+        jwt.sign(payload, consts.jwtSecretKey, { expiresIn: 3600 }, (err, token) => {
             if(err) throw err;
             res.json({ token, isAdmin: user.isAdmin });
         });

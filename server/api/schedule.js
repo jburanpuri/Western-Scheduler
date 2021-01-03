@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../authentication');
-const Course = require('../../schema/Course');
-const Schedule = require('../../schema/Schedule');
+const Course = require('../schema/CourseSchema');
+const Schedule = require('../schema/ScheduleSchema');
 const { check, validationResult } = require('express-validator');
 
 //get all schedules - public
@@ -150,6 +150,41 @@ router.put('/courses/add/:id', auth, async (req, res) => {
     catch(err){
         console.error(err);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+//create new schedule - public
+router.post('/', auth,[
+    check('name', 'Please enter a valid name').not().isEmpty().trim().escape(),
+    check('desc').trim().escape()
+],async(req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({ errors: errors.array() })
+    }
+
+    let { name, desc, isPublic } = req.body
+    try{
+        let schedule = await Schedule.findOne({ user: req.user.id, name });
+        if(schedule){
+            return res.status(400).json({ errors: [{ msg: 'Schedule already exists' }] });
+        }
+
+        schedule = new Schedule({
+            user: req.user.id,
+            name,
+            desc,
+            isPublic
+        });
+
+        await schedule.save();
+
+        res.json(schedule);
+        
+    }
+    catch(err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
     }
 });
 

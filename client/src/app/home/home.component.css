@@ -11,14 +11,14 @@
 }
 
 .box1{
-    background: linear-gradient(rgba(0, 0, 0, 0.671), rgba(0, 0, 0, 0.671)), url('../pictures/western.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.671), rgba(0, 0, 0, 0.671)), url('../content/western.jpg');
     box-shadow:
     0 13px 15px rgba(0, 0, 0, 0.15)
     ;
 }
 
 .box2{
-    background: url('../assets/search.png');
+    background: url('../content/search.png');
     background-size: cover;
     background-position: center;
     box-shadow:
@@ -27,7 +27,7 @@
 }
 
 .box5{
-    background: url('../assets/create.png');
+    background: url('../content/create.png');
     background-size: cover;
     background-position: center;
     box-shadow:

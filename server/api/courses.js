@@ -2,8 +2,8 @@ const express = require('express');
 const auth = require('../authentication');
 const { check, validationResult } = require('express-validator');
 const router = express.Router();
-const Course = require('../../schema/Course');
-const User = require('../../schema/User');
+const Course = require('../schema/CourseSchema');
+const User = require('../schema/UserSchema');
 
 //get all courses in db - public 
 router.get('/', async(req, res) => {
