@@ -13,13 +13,13 @@ const API_URL = `${environment.apiUrl}`
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticated:boolean = false;
-  private isAdmin:boolean = false;
-  private token:string  = '';
+  private isAuthenticated: boolean = false;
+  private isAdmin: boolean = false;
+  private token: string = '';
   private authStatusListener = new Subject<boolean>();
   private adminStatusListener = new Subject<boolean>();
 
-  constructor(private http:HttpClient, private router:Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   getToken() {
     return this.token;
@@ -42,11 +42,11 @@ export class AuthService {
     return this.adminStatusListener.asObservable();
   }
 
-  registerUser(name:string, email:string, password:string) {
-    this.http.post<{token:string, isAdmin:boolean}>(`${API_URL}/users`, { name, email, password })
+  registerUser(name: string, email: string, password: string) {
+    this.http.post<{ token: string, isAdmin: boolean }>(`${API_URL}/users`, { name, email, password })
       .subscribe(t => {
         this.token = t.token;
-        if(this.token){
+        if (this.token) {
           this.isAuthenticated = true;
           this.isAdmin = t.isAdmin;
           this.authStatusListener.next(true);
@@ -59,12 +59,12 @@ export class AuthService {
       })
   }
 
-  loginUser(email:string, password:string) {
+  loginUser(email: string, password: string) {
 
-    this.http.post<{token:string, isAdmin:boolean}>(`${API_URL}/auth`, { email, password })
+    this.http.post<{ token: string, isAdmin: boolean }>(`${API_URL}/auth`, { email, password })
       .subscribe(t => {
         this.token = t.token;
-        if(this.token){
+        if (this.token) {
           this.isAuthenticated = true;
           this.isAdmin = t.isAdmin;
           this.saveAuthData(this.token);
@@ -75,42 +75,54 @@ export class AuthService {
       }, error => {
         this.authStatusListener.next(false);
       })
-    }
+  }
 
-    logoutUser() {
-      this.token = '';
-      this.isAuthenticated = false;
-      this.authStatusListener.next(false);
-      this.clearAuthData();
-      this.router.navigate(['/']);
-    }
+  changePassword(currentPassword: string, newPassword: string, confirmPassword: string) {
 
-    autoAuthUser() {
-      const authToken = this.getAuthData();
-      if(!authToken) {
-        return;
-      }
-      console.log(this.isAdmin);
-      this.token = authToken;
-      this.isAuthenticated = true;
-      this.saveAuthData(authToken);
-      this.authStatusListener.next(true);
-    }
+    this.http.post<{succeed: boolean}>(`${API_URL}/auth/changePassword`, { currentPassword, newPassword, confirmPassword })
+      .subscribe(t => {
+        if(t.succeed){
+          this.router.navigate(['/login']);
+        }
+      }, error => {
+        this.authStatusListener.next(false);
+      })
+  }
 
-    private saveAuthData(token:string) {
-      localStorage.setItem('token', token);
-    }
+  logoutUser() {
+    this.token = '';
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+    this.clearAuthData();
+    this.router.navigate(['/']);
+  }
 
-    private clearAuthData() {
-      localStorage.removeItem('token');
-      
+  autoAuthUser() {
+    const authToken = this.getAuthData();
+    if (!authToken) {
+      return;
     }
+    console.log(this.isAdmin);
+    this.token = authToken;
+    this.isAuthenticated = true;
+    this.saveAuthData(authToken);
+    this.authStatusListener.next(true);
+  }
 
-    private getAuthData() {
-      const token = localStorage.getItem('token');
-      if(!token){
-        return;
-      }
-      return token
+  private saveAuthData(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  private clearAuthData() {
+    localStorage.removeItem('token');
+
+  }
+
+  private getAuthData() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return;
     }
+    return token
+  }
 }

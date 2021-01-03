@@ -14,6 +14,7 @@ import { DocViewerComponent } from './docs/doc-viewer/doc-viewer.component';
 import { HomeComponent } from './home/home.component'
 import { AuthGuard } from './authentication/auth.guard';
 import { AdminGuard } from './authentication/admin.guard';
+import { ChangepasswordComponent } from './changepassword/changepassword.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,7 +29,8 @@ const routes: Routes = [
   { path: 'public', component: PublicSchedulesComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },
-  { path: 'docs/view/:docTitle', component: DocViewerComponent }
+  { path: 'docs/view/:docTitle', component: DocViewerComponent },
+  { path: 'changePassword', component: ChangepasswordComponent }
 ];
 
 @NgModule({
