@@ -3,8 +3,10 @@
         <div class="inner hero">
             <h1>Western Schedules</h1>
             <p>Search or Create Schedules!</p>
-            <a mat-raised-button color="accent" style="margin-right: 1rem;" routerLink="/register">Register Now!</a>
-            <a mat-raised-button color="primary" routerLink="/login">Login</a>
+            <div *ngIf="!isUserAuthenticated">
+                <a mat-raised-button color="accent" style="margin-right: 1rem;" routerLink="/register">Register Now!</a>
+                <a mat-raised-button color="primary" routerLink="/login">Login</a>
+            </div>
         </div>
     </div>
     <div class="grid-block box2"></div>
@@ -22,6 +24,6 @@
             <a mat-raised-button color="accent" routerLink="/register">Register to Create</a>
         </div>
     </div>
-    <div class="grid-block box5"></div>
+    <div class="grid-block box5">something</div>
 
 </div>
