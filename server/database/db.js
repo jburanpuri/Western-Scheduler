@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const consts = require('../global-constants')
-
+const seed = require('./seed');
 
 const connectToDb = async () => {
     try{
@@ -11,7 +11,10 @@ const connectToDb = async () => {
             useCreateIndex: true,
             useFindAndModify: false
          });
-        console.log('MongoDB connected...');
+
+         await seed.seedDocs();
+
+        console.log('MongoDB connected and seeded...');
     }
     catch(err){
         console.error(err.message);

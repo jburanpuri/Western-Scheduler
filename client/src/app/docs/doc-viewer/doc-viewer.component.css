@@ -1,11 +1,18 @@
-h1{
+h1 {
     margin-bottom: 4rem;
-}
-
-form{
+  }
+  
+  form {
     width: 100%;
-}
-
-mat-form-field{
+  }
+  
+  mat-form-field {
     display: block;
-}
+  }
+  
+  .mat-input-element:disabled,
+  .mat-form-field-type-mat-native-select.mat-form-field-disabled
+    .mat-form-field-infix::after {
+    color: black;
+  }
+  

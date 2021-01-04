@@ -2,9 +2,10 @@
 <mat-card *ngIf="!isLoading">
     <h1>{{ doc.title }}</h1>
     <form [formGroup]="form" (submit)="saveDoc()"  >
-        <mat-form-field>
+        <mat-form-field >
             <mat-label>Content</mat-label>
-            <textarea
+            <textarea 
+            [disabled]="!isUserAdmin"
             rows="50"
             matInput 
             type="text" 

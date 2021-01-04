@@ -26,7 +26,6 @@ const routes: Routes = [
   { path: 'schedules', component: ScheduleViewerComponent, canActivate: [AuthGuard] },
   { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'docs/:docId', component: DocEditorComponent, canActivate: [AuthGuard, AdminGuard] },
-  { path: 'docs', component: DocEditorComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'public', component: PublicSchedulesComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },

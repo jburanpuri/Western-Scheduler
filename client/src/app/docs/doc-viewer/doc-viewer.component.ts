@@ -21,12 +21,16 @@ export class DocViewerComponent implements OnInit {
     this.form = new FormGroup({
       'content': new FormControl('', {validators: [Validators.required]})
     });
+
+    this.form.get("content").disable();
+
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if(paramMap.has('docTitle')){
         this.docTitle = paramMap.get('docTitle');
         this.isLoading = true;
         this.docsService.getDocByTitle(this.docTitle)
           .subscribe(doc => {
+            console.log(doc);
             this.isLoading = false;
             this.doc = doc;
             this.form.setValue({'content': this.doc.content})
