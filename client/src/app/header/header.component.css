@@ -13,3 +13,8 @@ a {
     text-decoration: none;
     color: rgb(160, 160, 160);
 }
+
+.mat-toolbar.mat-primary {
+    background: #05ff65;
+    color: #fff;
+}
