@@ -7,7 +7,7 @@ const seedDocs = async () => {
     const title = titles[i];
 
     const dbDoc = await Doc.findOne({ title: title });
-    if (dbDoc) return;
+    if (dbDoc) continue;
 
     const newDoc = new Doc({
       title,
