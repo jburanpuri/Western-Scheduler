@@ -18,43 +18,43 @@ const CourseSchema = new Schema({
     },
     course_info: [
         {
-        class_nbr: {
-            type: Number,
-            required: true
-        },
-        start_time: {
-            type: String,
-            required: true
-        },
-        descrlong: {
-            type: String,
-        },
-        end_time: {
-            type: String,
-            required: true
-        },
-        campus: {
-            type: String,
-            required: true
-        },
-        facility_ID: {
-            type: String,
-            required: true
-        },
-        days: [String],
-        instructors: [String],
-        class_section: {
-            type: String
-        },
-        ssr_component: {
-            type: String
-        },
-        enrl_stat: {
-            type: String
-        },
-        descr: {
-            type: String
-        }
+            class_nbr: {
+                type: Number,
+                required: true
+            },
+            start_time: {
+                type: String,
+                required: true
+            },
+            descrlong: {
+                type: String,
+            },
+            end_time: {
+                type: String,
+                required: true
+            },
+            campus: {
+                type: String,
+                required: true
+            },
+            facility_ID: {
+                type: String,
+                required: true
+            },
+            days: [String],
+            instructors: [String],
+            class_section: {
+                type: String
+            },
+            ssr_component: {
+                type: String
+            },
+            enrl_stat: {
+                type: String
+            },
+            descr: {
+                type: String
+            }
         }
     ],
     catalog_description: {
@@ -77,4 +77,6 @@ const CourseSchema = new Schema({
     ],
 });
 
-module.exports = Course = mongoose.model('course', CourseSchema);
+const Course = mongoose.model('course', CourseSchema);
+Course.createIndexes();
+module.exports = Course;

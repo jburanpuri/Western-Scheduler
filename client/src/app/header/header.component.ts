@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
     this.adminListenerSub = this.authService.getAdminStatus()
       .subscribe(isAdmin => {
+        console.log("isAdmin =" + isAdmin)
         this.isAdmin = isAdmin;
       })
   }

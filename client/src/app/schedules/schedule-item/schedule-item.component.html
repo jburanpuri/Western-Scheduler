@@ -7,6 +7,7 @@
             {{ stringAsDate(schedule.modified) | date:'MM-dd-yy   HH:mm:ss' }}
         </mat-panel-description>
     </mat-expansion-panel-header>
+    <h4>User : {{schedule.user.name}}</h4>
     <h4>Description:</h4>
     <p>{{ schedule.desc }}</p>
     <h4>Courses:</h4>

@@ -36,20 +36,24 @@ router.get('/:id', auth, async(req, res) => {
 //get course with course done in db -public
 router.get('/search/query', async(req, res) => {
     try{
-        const cata = req.query.code;
-        const component = req.query.component;
-        const key = req.query.key;
-        const sub = req.query.subject;
+
+        const {code,component,key, subject} = req.query;
+
+        console.log("code = " + code);
+        console.log("component = " + component);
+        console.log("key = " + key);
+        console.log("subject = " + subject);
 
         if(key){
             const courses = await Course.find({$text : { $search : key }});
+            
             if(!courses || courses.length === 0){
                 return res.status(404).json({errors: [{ msg: 'course not found 1' }] });
             }
 
             return res.json(courses);
         }
-        else if(!cata && !component && !sub){
+        else if(!code && !component && !subject){
             const courses = await Course.find();
             if(!courses || courses.length === 0){
                 return res.status(404).json({errors: [{ msg: 'course not found 2' }] });
@@ -57,15 +61,15 @@ router.get('/search/query', async(req, res) => {
 
             return res.json(courses);
         }
-        else if(cata && !component && !sub){
-            const courses = await Course.find({ catalog_nbr: { "$regex": cata } });
+        else if(code && !component && !subject){
+            const courses = await Course.find({ catalog_nbr: { "$regex": code } });
             if(!courses || courses.length === 0){
                 return res.status(404).json({errors: [{ msg: 'course not found 3' }] });
             }
 
             return res.json(courses);
         }
-        else if(!cata && component && !sub){
+        else if(!code && component && !subject){
             const courses = await Course.find({ course_info: { "$elemMatch" :{ssr_component: component}} });
             if(!courses || courses.length === 0){
                 return res.status(404).json({errors: [{ msg: 'course not found 4' }] });
@@ -73,32 +77,32 @@ router.get('/search/query', async(req, res) => {
 
             return res.json(courses);
         }
-        else if(!cata && !component && sub){
-            const courses = await Course.find({ subject: { "$regex": sub } });
+        else if(!code && !component && subject){
+            const courses = await Course.find({ subject: { "$regex": subject } });
             if(!courses || courses.length === 0){
                 return res.status(404).json({errors: [{ msg: 'course not found 5' }] });
             }
 
             return res.json(courses);
         }
-        else if(cata && component && !sub){
-            const courses = await Course.find({ catalog_nbr: { "$regex": cata }, course_info: { "$elemMatch" :{ssr_component: component}} });
+        else if(code && component && !subject){
+            const courses = await Course.find({ catalog_nbr: { "$regex": code }, course_info: { "$elemMatch" :{ssr_component: component}} });
             if(!courses || courses.length === 0){
                 return res.status(404).json({errors: [{ msg: 'course not found 6' }] });
             }
 
             return res.json(courses);
         }
-        else if(cata && !component && sub){
-            const courses = await Course.find({ catalog_nbr: { "$regex": cata }, subject: { "$regex": sub } });
+        else if(code && !component && subject){
+            const courses = await Course.find({ catalog_nbr: { "$regex": code }, subject: { "$regex": subject } });
             if(!courses || courses.length === 0){
                 return res.status(404).json({errors: [{ msg: 'course not found 7' }] });
             }
 
             return res.json(courses);
         }
-        else if(!cata && component && sub){
-            const courses = await Course.find({ subject: { "$regex": sub }, course_info: { "$elemMatch" :{ssr_component: component}} });
+        else if(!code && component && subject){
+            const courses = await Course.find({ subject: { "$regex": subject }, course_info: { "$elemMatch" :{ssr_component: component}} });
             if(!courses || courses.length === 0){
                 return res.status(404).json({errors: [{ msg: 'course not found 8' }] });
             }
@@ -106,7 +110,7 @@ router.get('/search/query', async(req, res) => {
             return res.json(courses);
         }
         else{
-            const courses = await Course.find({ catalog_nbr: { "$regex": cata }, subject: { "$regex": sub }, course_info: { "$elemMatch" :{ssr_component: component}} });
+            const courses = await Course.find({ catalog_nbr: { "$regex": code }, subject: { "$regex": subject }, course_info: { "$elemMatch" :{ssr_component: component}} });
             if(!courses || courses.length === 0){
                 return res.status(404).json({errors: [{ msg: 'course not found 9' }] });
             }

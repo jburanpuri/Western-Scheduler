@@ -21,7 +21,7 @@ router.get('/', auth, async(req, res) => {
 //get schedules for specific user - public
 router.get('/user', auth, async(req, res) => {
     try{
-        const schedules = await Schedule.find({ user: req.user.id }).populate('courses').sort({ modified: -1 });
+        const schedules = await Schedule.find({ user: req.user.id }).populate('courses').populate('user').sort({ modified: -1 });
 
         res.json(schedules);
     }
@@ -31,11 +31,11 @@ router.get('/user', auth, async(req, res) => {
     }
 });
 
-//get 15 latest schedules
+//get 10 latest schedules
 router.get('/public', async (req, res) => {
     try{
         //returns latest 15 schedules 
-        const schedules = await Schedule.find({ isPublic: true }).populate('courses').sort({ modified: -1 }).limit(15);
+        const schedules = await Schedule.find({ isPublic: true }).populate('courses').populate('user').sort({ modified: -1 }).limit(10);
         res.json(schedules);
     }
     catch(err){

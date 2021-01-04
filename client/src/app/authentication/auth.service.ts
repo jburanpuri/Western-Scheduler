@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthData } from '../models/AuthData.model';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
@@ -17,9 +17,10 @@ export class AuthService {
   private isAdmin: boolean = false;
   private token: string = '';
   private authStatusListener = new Subject<boolean>();
-  private adminStatusListener = new Subject<boolean>();
+  private adminStatusListener = new BehaviorSubject<boolean>(localStorage.getItem("IsUserAdmin") == "true");
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   getToken() {
     return this.token;
@@ -51,6 +52,7 @@ export class AuthService {
           this.isAdmin = t.isAdmin;
           this.authStatusListener.next(true);
           this.adminStatusListener.next(t.isAdmin);
+          localStorage.setItem("IsUserAdmin", `${t.isAdmin}`);
           this.saveAuthData(this.token);
           this.router.navigate(['/schedules']);
         }
