@@ -20,10 +20,19 @@ app.use('/api/schedule', require('./api/schedule'));
 app.use('/api/docs', require('./api/docs'));
 app.use('/api/auth', require('./api/authentication'));
 
-app.use(express.static(path.join(__dirname, 'www')));
-app.get('*', (req,res)=> {
-    res.sendFile(path.join(__dirname, '/www/index.html'));
+// app.use(express.static(path.join(__dirname, 'www')));
+// app.get('*', (req,res)=> {
+//     res.sendFile(path.join(__dirname, '/www/index.html'));
+// });
+
+const path = require('path');
+// Point to directory containing static files
+app.use(express.static(path.join(__dirname, '/www/index.html')));
+//catch all other routes to return the index file
+app.get('*', (req,res) => {
+res.sendFile(path.join(__dirname,'/www/index.html'));
 });
+
 
 
 app.listen(PORT, () => (`Server started on port ${PORT}`));
