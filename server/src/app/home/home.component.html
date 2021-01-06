@@ -1,0 +1,29 @@
+<div class="home-grid">
+    <div class="grid-block box1">
+        <div class="inner hero">
+            <h1>Western Schedules</h1>
+            <p>Search or Create Schedules!</p>
+            <div *ngIf="!isUserAuthenticated">
+                <a mat-raised-button color="accent" style="margin-right: 1rem;" routerLink="/register">Register Now!</a>
+                <a mat-raised-button color="primary" routerLink="/login">Login</a>
+            </div>
+        </div>
+    </div>
+    <div class="grid-block box2"></div>
+    <div class="grid-block box3">
+        <div class="inner search">
+            <h1>Browse Courses</h1>
+            <p>Browse, read through, or review courses through the course catalogue!</p>
+            <a mat-raised-button color="accent" routerLink="/search">Start Searching</a>
+        </div>
+    </div>
+    <div class="grid-block box4">
+        <div class="inner search">
+            <h1>Create Schedules</h1>
+            <p>Privately or publically create your own schedule!</p>
+            <a mat-raised-button color="accent" routerLink="/register">Register to Create</a>
+        </div>
+    </div>
+    <div class="grid-block box5">something</div>
+
+</div>

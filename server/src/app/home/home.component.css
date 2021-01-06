@@ -1,0 +1,79 @@
+.home-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 500px;
+    grid-gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.box1{
+    grid-column: 1/3;
+}
+
+.box1{
+    background: linear-gradient(rgba(0, 0, 0, 0.671), rgba(0, 0, 0, 0.671)), url('../content/western.jpg');
+    box-shadow:
+    0 13px 15px rgba(0, 0, 0, 0.15)
+    ;
+}
+
+.box2{
+    background: url('../content/search.png');
+    background-size: cover;
+    background-position: center;
+    box-shadow:
+    0 13px 15px rgba(0, 0, 0, 0.15)
+    ;
+}
+
+.box5{
+    background: url('../content/create.png');
+    background-size: cover;
+    background-position: center;
+    box-shadow:
+    0 13px 15px rgba(0, 0, 0, 0.15)
+    ;
+}
+
+.grid-block {
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.inner{
+    text-align: center;
+}
+
+.search h1{
+    color: #8c9cf7;
+    font-size: 2em;
+}
+
+.hero h1{
+    color: rgb(160, 160, 160);
+    font-size: 3em;
+    margin-bottom: 2rem;
+}
+
+.hero p{
+    color: rgb(160, 160, 160);
+    font-size: 1.4em;
+    margin-bottom: 4rem;
+}
+
+.search{
+    text-align: left;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+
+.search p{
+    font-size: 1em;
+    margin-bottom: 5rem;
+}
